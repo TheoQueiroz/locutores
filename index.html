@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locutores — Diretório de Voz</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROOT & RESET
+   ═══════════════════════════════════════════ */
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-card-hover: #1a1a28;
+  --border: #1e1e30;
+  --border-light: #2a2a40;
+  --text: #e8e8f0;
+  --text-muted: #8888a0;
+  --accent: #f0a84d;
+  --accent-light: #f5c27a;
+  --accent-glow: rgba(240, 168, 77, 0.15);
+  --male: #4d8bf0;
+  --female: #e86b8a;
+  --international: #7c6be8;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══ ANIMATED BACKGROUND ═══ */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.bg-orbs span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.08;
+}
+.bg-orbs .o1 { width: 600px; height: 600px; background: var(--accent); top: -10%; left: -5%; animation: orbFloat 30s ease-in-out infinite; }
+.bg-orbs .o2 { width: 500px; height: 500px; background: #6b4de8; bottom: -15%; right: -8%; animation: orbFloat 25s ease-in-out infinite reverse; }
+.bg-orbs .o3 { width: 400px; height: 400px; background: var(--female); top: 40%; left: 50%; animation: orbFloat 35s ease-in-out infinite 5s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -40px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
+}
+
+/* ═══ HEADER ═══ */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 40px 24px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.brand h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #f5c27a 0%, #f0a84d 50%, #e8913a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+.brand p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 300;
+}
+.brand .count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-glow);
+  border: 1px solid rgba(240, 168, 77, 0.2);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* ═══ SEARCH BAR ═══ */
+.search-section {
+  margin-top: 24px;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 4px 18px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  max-width: 500px;
+}
+.search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+.search-bar svg { flex-shrink: 0; width: 20px; height: 20px; color: var(--text-muted); }
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 14px 12px;
+  font-size: 0.95rem;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  outline: none;
+}
+.search-bar input::placeholder { color: var(--text-muted); }
+.search-bar input:focus { outline: none; }
+
+/* ═══ FILTERS ═══ */
+.filters {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.filter-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-group-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-right: 4px;
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+}
+.filter-chip:hover {
+  border-color: var(--border-light);
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+.filter-chip.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.filter-chip .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  display: inline-block;
+}
+.filter-chip .dot.male { background: var(--male); }
+.filter-chip .dot.female { background: var(--female); }
+.filter-chip .dot.nacional { background: #4de87b; }
+.filter-chip .dot.internacional { background: var(--international); }
+.filter-chip .clear-btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: 'Inter', sans-serif;
+}
+.filter-chip .clear-btn:hover {
+  border-color: var(--female);
+  color: var(--female);
+}
+
+/* ═══ STYLE TAGS (filter chips for styles) ═══ */
+.style-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.25s;
+  border: 1px solid transparent;
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+}
+.style-tag.grave { background: rgba(77, 139, 240, 0.12); color: #7aabf5; border-color: rgba(77, 139, 240, 0.2); }
+.style-tag.agudo { background: rgba(232, 107, 138, 0.12); color: #f08aa8; border-color: rgba(232, 107, 138, 0.2); }
+.style-tag.varejo { background: rgba(240, 168, 77, 0.12); color: #f5c27a; border-color: rgba(240, 168, 77, 0.2); }
+.style-tag.institucional { background: rgba(124, 107, 232, 0.12); color: #a594f0; border-color: rgba(124, 107, 232, 0.2); }
+.style-tag.caricato { background: rgba(232, 77, 107, 0.12); color: #f08a9e; border-color: rgba(232, 77, 107, 0.2); }
+.style-tag.locomotion-esportiva { background: rgba(77, 232, 139, 0.12); color: #7af0a5; border-color: rgba(77, 232, 139, 0.2); }
+.style-tag.narracao { background: rgba(139, 107, 232, 0.12); color: #b89ef5; border-color: rgba(139, 107, 232, 0.2); }
+.style-tag.apresentacao { background: rgba(107, 200, 232, 0.12); color: #8ed4f0; border-color: rgba(107, 200, 232, 0.2); }
+.style-tag.dublagem { background: rgba(232, 139, 77, 0.12); color: #f0b07a; border-color: rgba(232, 139, 77, 0.2); }
+.style-tag.radio { background: rgba(200, 107, 232, 0.12); color: #d48ef0; border-color: rgba(200, 107, 232, 0.2); }
+
+.style-tag:hover { filter: brightness(1.3); transform: translateY(-1px); }
+.style-tag.active {
+  filter: brightness(1);
+  box-shadow: 0 0 16px rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ═══ GRID ═══ */
+.grid-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 24px auto;
+  padding: 0 24px 60px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state svg { width: 60px; height: 60px; opacity: 0.3; margin-bottom: 16px; }
+.empty-state h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text); }
+.empty-state p { font-size: 0.9rem; }
+
+/* ═══ CARD ═══ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: linear-gradient(135deg, rgba(240,168,77,0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+.card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.4);
+  background: var(--bg-card-hover);
+}
+.card:hover::before { opacity: 1; }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #fff;
+  flex-shrink: 0;
+  position: relative;
+}
+.avatar .flag {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.card-info { flex: 1; min-width: 0; }
+.card-info h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+.badge.masculino { background: rgba(77, 139, 240, 0.1); color: var(--male); }
+.badge.feminino { background: rgba(232, 107, 138, 0.1); color: var(--female); }
+.badge.nacional { background: rgba(77, 232, 123, 0.1); color: #4de87b; }
+.badge.internacional { background: rgba(124, 107, 232, 0.1); color: var(--international); }
+
+.card-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 12px 0;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+.contact-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.contact-item a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-item a:hover { color: var(--accent); }
+
+.card-styles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.style-pill {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.style-pill.grave { background: rgba(77, 139, 240, 0.1); color: #7aabf5; }
+.style-pill.agudo { background: rgba(232, 107, 138, 0.1); color: #f08aa8; }
+.style-pill.varejo { background: rgba(240, 168, 77, 0.1); color: #f5c27a; }
+.style-pill.institucional { background: rgba(124, 107, 232, 0.1); color: #a594f0; }
+.style-pill.caricato { background: rgba(232, 77, 107, 0.1); color: #f08a9e; }
+.style-pill.locomotion-esportiva { background: rgba(77, 232, 139, 0.1); color: #7af0a5; }
+.style-pill.narracao { background: rgba(139, 107, 232, 0.1); color: #b89ef5; }
+.style-pill.apresentacao { background: rgba(107, 200, 232, 0.1); color: #8ed4f0; }
+.style-pill.dublagem { background: rgba(232, 139, 77, 0.1); color: #f0b07a; }
+.style-pill.radio { background: rgba(200, 107, 232, 0.1); color: #d48ef0; }
+
+.card-obs {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  header { padding: 24px 16px 16px; }
+  .grid-container { padding: 16px; }
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .header-top { flex-direction: column; }
+  .search-bar { max-width: 100%; }
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
+
+/* ═══ CARD ENTRANCE ANIMATION ═══ */
+.card { opacity: 0; transform: translateY(20px); animation: cardIn 0.5s ease forwards; }
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+.card:nth-child(1) { animation-delay: 0.02s; }
+.card:nth-child(2) { animation-delay: 0.04s; }
+.card:nth-child(3) { animation-delay: 0.06s; }
+.card:nth-child(4) { animation-delay: 0.08s; }
+.card:nth-child(5) { animation-delay: 0.10s; }
+.card:nth-child(6) { animation-delay: 0.12s; }
+.card:nth-child(7) { animation-delay: 0.14s; }
+.card:nth-child(8) { animation-delay: 0.16s; }
+.card:nth-child(9) { animation-delay: 0.18s; }
+.card:nth-child(10) { animation-delay: 0.20s; }
+.card:nth-child(11) { animation-delay: 0.22s; }
+.card:nth-child(12) { animation-delay: 0.24s; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <span class="o1"></span>
+  <span class="o2"></span>
+  <span class="o3"></span>
+</div>
+
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <h1>Locutores</h1>
+      <p>Diretório premium de vozes para locução profissional</p>
+      <div class="count">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+        <span id="total-count">0</span> vozes cadastradas
+      </div>
+    </div>
+  </div>
+
+  <div class="search-section">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar por nome, estilo, cidade..." autocomplete="off">
+    </div>
+  </div>
+
+  <div class="filters" id="filters">
+    <!-- Gênero -->
+    <div class="filter-group">
+      <span class="filter-group-label">Gênero</span>
+      <button class="filter-chip" data-filter="genero" data-value="Masculino"><span class="dot male"></span>Masculino</button>
+      <button class="filter-chip" data-filter="genero" data-value="Feminino"><span class="dot female"></span>Feminino</button>
+    </div>
+
+    <!-- Nacionalidade -->
+    <div class="filter-group">
+      <span class="filter-group-label">Origem</span>
+      <button class="filter-chip" data-filter="nacionalidade" data-value="Nacional"><span class="dot nacional"></span>🇧🇷 Nacional</button>
+      <button class="filter-chip" data-filter="nacionalidade" data-value="Internacional"><span class="dot internacional"></span>🌍 Internacional</button>
+    </div>
+
+    <!-- Estilos -->
+    <div class="filter-group" id="style-filters">
+      <span class="filter-group-label">Estilo</span>
+    </div>
+
+    <!-- Limpar -->
+    <button class="clear-btn" id="clearFilters">✕ Limpar filtros</button>
+  </div>
+</header>
+
+<div class="grid-container">
+  <div class="grid" id="locutorGrid"></div>
+</div>
+
+<footer>
+  Locutores — Diretório de Voz Profissional
+</footer>
+
+<script>
+// ════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════
+const LOCUTORES = [
+  { nome: "João Silva", telefone: "(11) 99999-0001", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Institucional"], obs: "Locutor principal" },
+  { nome: "Maria Costa", telefone: "(11) 99999-0002", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Agudo", "Varejo", "Caricato"], obs: "Versátil, faz personagens" },
+  { nome: "Peter Brown", telefone: "+1 (555) 123-4567", genero: "Masculino", nacionalidade: "Internacional", estilos: ["Grave", "Institucional"], obs: "Locutor internacional EN/PT" },
+  { nome: "Ana Oliveira", telefone: "(21) 98888-0003", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Institucional", "Apresentação"], obs: "Locutora institucional" },
+  { nome: "Carlos Santos", telefone: "(31) 97777-0004", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Varejo", "Caricato", "Rádio"], obs: "Locutor de rádio FM" },
+  { nome: "Sarah Johnson", telefone: "+1 (555) 987-6543", genero: "Feminino", nacionalidade: "Internacional", estilos: ["Agudo", "Varejo"], obs: "Voz feminina internacional" },
+  { nome: "Lucas Mendes", telefone: "(11) 96666-0005", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Locução Esportiva"], obs: "Narrador esportivo" },
+  { nome: "Fernanda Lima", telefone: "(41) 95555-0006", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Agudo", "Institucional", "Apresentação"], obs: "Apresentadora e locutora" },
+  { nome: "Roberto Alves", telefone: "(19) 94444-0007", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Caricato", "Dublagem"], obs: "Dublador e ator" },
+  { nome: "Julia Martins", telefone: "(11) 93333-0008", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Agudo", "Varejo", "Caricato", "Rádio"], obs: "Locução promocional" },
+  { nome: "Mike O'Brien", telefone: "+353 87 123 4567", genero: "Masculino", nacionalidade: "Internacional", estilos: ["Grave", "Institucional", "Apresentação"], obs: "Locutor irlandês EN" },
+  { nome: "Paulo Azevedo", telefone: "(15) 92222-0009", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Agudo", "Varejo", "Institucional", "Caricato"], obs: "Faz todos os estilos" },
+];
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+const state = {
+  search: '',
+  genero: null,
+  nacionalidade: null,
+  estilos: new Set(),
+};
+
+// Extract all unique styles
+const ALL_STYLES = [...new Set(LOCUTORES.flatMap(l => l.estilos))];
+
+// ════════════════════════════════════════════
+// DOM REFS
+// ════════════════════════════════════════════
+const grid = document.getElementById('locutorGrid');
+const searchInput = document.getElementById('searchInput');
+const totalCount = document.getElementById('total-count');
+const styleFiltersEl = document.getElementById('style-filters');
+const clearBtn = document.getElementById('clearFilters');
+
+// Avatar colors
+const COLORS = [
+  ['#4d8bf0', '#2563eb'], ['#e86b8a', '#db2777'], ['#f0a84d', '#d97706'],
+  ['#7c6be8', '#6d28d9'], ['#4de87b', '#16a34a'], ['#e84d6b', '#be123c'],
+  ['#4dd4e8', '#0891b2'], ['#a87be8', '#7c3aed'], ['#e8a84d', '#b45309'],
+  ['#e84d4d', '#b91c1c'], ['#4de8a8', '#0d9488'], ['#c84de8', '#a21caf'],
+];
+
+// ════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+function getWhatsAppLink(tel) {
+  const digits = tel.replace(/\D/g, '');
+  return `https://wa.me/55${digits}`;
+}
+
+function cardHTML(locutor, index) {
+  const colors = COLORS[index % COLORS.length];
+  const isBr = !locutor.telefone.startsWith('+');
+  const wspLink = isBr ? getWhatsAppLink(locutor.telefone) : null;
+  const initial = getInitials(locutor.nome);
+
+  const stylePills = locutor.estilos.map(s => {
+    const cls = s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+    return `<span class="style-pill ${cls}">${s}</span>`;
+  }).join('');
+
+  return `
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar" style="background: linear-gradient(135deg, ${colors[0]}, ${colors[1]});">
+          ${initial}
+          <span class="flag">${locutor.nacionalidade === 'Internacional' ? '🌍' : '🇧🇷'}</span>
+        </div>
+        <div class="card-info">
+          <h3>${locutor.nome}</h3>
+          <div class="card-meta">
+            <span class="badge ${locutor.genero.toLowerCase()}">${locutor.genero === 'Masculino' ? '♂' : '♀'} ${locutor.genero}</span>
+            <span class="badge ${locutor.nacionalidade.toLowerCase()}">${locutor.nacionalidade}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-contact">
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          ${wspLink ? `<a href="${wspLink}" target="_blank">${locutor.telefone}</a>` : `<span>${locutor.telefone}</span>`}
+        </div>
+      </div>
+      <div class="card-styles">${stylePills}</div>
+      ${locutor.obs ? `<div class="card-obs">${locutor.obs}</div>` : ''}
+    </div>
+  `;
+}
+
+function render() {
+  const filtered = LOCUTORES.filter(l => {
+    // Search
+    if (state.search) {
+      const q = state.search.toLowerCase();
+      const match = l.nome.toLowerCase().includes(q) ||
+        l.estilos.some(s => s.toLowerCase().includes(q)) ||
+        (l.obs && l.obs.toLowerCase().includes(q));
+      if (!match) return false;
+    }
+    // Gender filter
+    if (state.genero && l.genero !== state.genero) return false;
+    // Nationality filter
+    if (state.nacionalidade && l.nacionalidade !== state.nacionalidade) return false;
+    // Style filter
+    if (state.estilos.size > 0) {
+      const hasAny = [...state.estilos].some(s => l.estilos.includes(s));
+      if (!hasAny) return false;
+    }
+    return true;
+  });
+
+  totalCount.textContent = LOCUTORES.length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <h3>Nenhum locutor encontrado</h3>
+        <p>Tente ajustar os filtros ou buscar por outro termo</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((l, i) => cardHTML(l, i)).join('');
+}
+
+// ════════════════════════════════════════════
+// FILTER CHIPS
+// ════════════════════════════════════════════
+document.querySelectorAll('.filter-chip[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    const value = btn.dataset.value;
+
+    if (filter === 'genero') {
+      state.genero = state.genero === value ? null : value;
+    } else if (filter === 'nacionalidade') {
+      state.nacionalidade = state.nacionalidade === value ? null : value;
+    }
+
+    // Update active state
+    document.querySelectorAll(`.filter-chip[data-filter="${filter}"]`).forEach(b => b.classList.remove('active'));
+    if (filter === 'genero' && state.genero) {
+      document.querySelector(`.filter-chip[data-filter="genero"][data-value="${state.genero}"]`).classList.add('active');
+    }
+    if (filter === 'nacionalidade' && state.nacionalidade) {
+      document.querySelector(`.filter-chip[data-filter="nacionalidade"][data-value="${state.nacionalidade}"]`).classList.add('active');
+    }
+
+    render();
+  });
+});
+
+// Style filters
+ALL_STYLES.forEach(style => {
+  const cls = style.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+  const btn = document.createElement('button');
+  btn.className = `style-tag ${cls}`;
+  btn.textContent = style;
+  btn.dataset.style = style;
+  btn.addEventListener('click', () => {
+    if (state.estilos.has(style)) {
+      state.estilos.delete(style);
+      btn.classList.remove('active');
+    } else {
+      state.estilos.add(style);
+      btn.classList.add('active');
+    }
+    render();
+  });
+  styleFiltersEl.appendChild(btn);
+});
+
+// Search
+searchInput.addEventListener('input', () => {
+  state.search = searchInput.value;
+  render();
+});
+
+// Clear filters
+clearBtn.addEventListener('click', () => {
+  state.genero = null;
+  state.nacionalidade = null;
+  state.estilos.clear();
+  state.search = '';
+  searchInput.value = '';
+
+  document.querySelectorAll('.filter-chip.active').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.style-tag.active').forEach(b => b.classList.remove('active'));
+
+  render();
+});
+
+// Initial render
+render();
+</script>
+</body>
+</html>
