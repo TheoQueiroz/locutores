@@ -6,9 +6,6 @@
 <title>Locutores — Diretório de Voz</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   ROOT & RESET
-   ═══════════════════════════════════════════ */
 :root {
   --bg: #0a0a0f;
   --bg-card: #12121a;
@@ -37,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ═══ ANIMATED BACKGROUND ═══ */
 .bg-orbs {
   position: fixed;
   inset: 0;
@@ -53,7 +49,7 @@ body {
 }
 .bg-orbs .o1 { width: 600px; height: 600px; background: var(--accent); top: -10%; left: -5%; animation: orbFloat 30s ease-in-out infinite; }
 .bg-orbs .o2 { width: 500px; height: 500px; background: #6b4de8; bottom: -15%; right: -8%; animation: orbFloat 25s ease-in-out infinite reverse; }
-.bg-orbs .o3 { width: 400px; height: 400px; background: var(--female); top: 40%; left: 50%; animation: orbFloat 35s ease-in-out infinite 5s; }
+.bg-orbs .o3 { width: 400px; height: 400px; background: #e86b8a; top: 40%; left: 50%; animation: orbFloat 35s ease-in-out infinite 5s; }
 
 @keyframes orbFloat {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -61,7 +57,6 @@ body {
   66% { transform: translate(-30px, 30px) scale(0.9); }
 }
 
-/* ═══ HEADER ═══ */
 header {
   position: relative;
   z-index: 10;
@@ -106,10 +101,7 @@ header {
   margin-top: 8px;
 }
 
-/* ═══ SEARCH BAR ═══ */
-.search-section {
-  margin-top: 24px;
-}
+.search-section { margin-top: 24px; }
 .search-bar {
   display: flex;
   align-items: center;
@@ -136,9 +128,7 @@ header {
   outline: none;
 }
 .search-bar input::placeholder { color: var(--text-muted); }
-.search-bar input:focus { outline: none; }
 
-/* ═══ FILTERS ═══ */
 .filters {
   margin-top: 20px;
   display: flex;
@@ -195,23 +185,7 @@ header {
 .filter-chip .dot.female { background: var(--female); }
 .filter-chip .dot.nacional { background: #4de87b; }
 .filter-chip .dot.internacional { background: var(--international); }
-.filter-chip .clear-btn {
-  background: transparent;
-  border: 1px dashed var(--border);
-  color: var(--text-muted);
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.25s;
-  font-family: 'Inter', sans-serif;
-}
-.filter-chip .clear-btn:hover {
-  border-color: var(--female);
-  color: var(--female);
-}
 
-/* ═══ STYLE TAGS (filter chips for styles) ═══ */
 .style-tag {
   display: inline-flex;
   align-items: center;
@@ -231,11 +205,11 @@ header {
 .style-tag.varejo { background: rgba(240, 168, 77, 0.12); color: #f5c27a; border-color: rgba(240, 168, 77, 0.2); }
 .style-tag.institucional { background: rgba(124, 107, 232, 0.12); color: #a594f0; border-color: rgba(124, 107, 232, 0.2); }
 .style-tag.caricato { background: rgba(232, 77, 107, 0.12); color: #f08a9e; border-color: rgba(232, 77, 107, 0.2); }
-.style-tag.locomotion-esportiva { background: rgba(77, 232, 139, 0.12); color: #7af0a5; border-color: rgba(77, 232, 139, 0.2); }
-.style-tag.narracao { background: rgba(139, 107, 232, 0.12); color: #b89ef5; border-color: rgba(139, 107, 232, 0.2); }
-.style-tag.apresentacao { background: rgba(107, 200, 232, 0.12); color: #8ed4f0; border-color: rgba(107, 200, 232, 0.2); }
-.style-tag.dublagem { background: rgba(232, 139, 77, 0.12); color: #f0b07a; border-color: rgba(232, 139, 77, 0.2); }
-.style-tag.radio { background: rgba(200, 107, 232, 0.12); color: #d48ef0; border-color: rgba(200, 107, 232, 0.2); }
+.style-tag.padrao { background: rgba(77, 232, 139, 0.12); color: #7af0a5; border-color: rgba(77, 232, 139, 0.2); }
+.style-tag.natural { background: rgba(139, 107, 232, 0.12); color: #b89ef5; border-color: rgba(139, 107, 232, 0.2); }
+.style-tag.jovem { background: rgba(107, 200, 232, 0.12); color: #8ed4f0; border-color: rgba(107, 200, 232, 0.2); }
+.style-tag.madura { background: rgba(232, 139, 77, 0.12); color: #f0b07a; border-color: rgba(232, 139, 77, 0.2); }
+.style-tag.conversada { background: rgba(200, 107, 232, 0.12); color: #d48ef0; border-color: rgba(200, 107, 232, 0.2); }
 
 .style-tag:hover { filter: brightness(1.3); transform: translateY(-1px); }
 .style-tag.active {
@@ -244,7 +218,22 @@ header {
   border-color: rgba(255,255,255,0.3);
 }
 
-/* ═══ GRID ═══ */
+.clear-btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: 'Inter', sans-serif;
+}
+.clear-btn:hover {
+  border-color: var(--female);
+  color: var(--female);
+}
+
 .grid-container {
   position: relative;
   z-index: 10;
@@ -267,7 +256,6 @@ header {
 .empty-state h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text); }
 .empty-state p { font-size: 0.9rem; }
 
-/* ═══ CARD ═══ */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -380,6 +368,10 @@ header {
   transition: color 0.2s;
 }
 .contact-item a:hover { color: var(--accent); }
+.contact-item .drive-link {
+  color: var(--accent);
+  opacity: 0.7;
+}
 
 .card-styles {
   display: flex;
@@ -403,21 +395,12 @@ header {
 .style-pill.varejo { background: rgba(240, 168, 77, 0.1); color: #f5c27a; }
 .style-pill.institucional { background: rgba(124, 107, 232, 0.1); color: #a594f0; }
 .style-pill.caricato { background: rgba(232, 77, 107, 0.1); color: #f08a9e; }
-.style-pill.locomotion-esportiva { background: rgba(77, 232, 139, 0.1); color: #7af0a5; }
-.style-pill.narracao { background: rgba(139, 107, 232, 0.1); color: #b89ef5; }
-.style-pill.apresentacao { background: rgba(107, 200, 232, 0.1); color: #8ed4f0; }
-.style-pill.dublagem { background: rgba(232, 139, 77, 0.1); color: #f0b07a; }
-.style-pill.radio { background: rgba(200, 107, 232, 0.1); color: #d48ef0; }
+.style-pill.padrao { background: rgba(77, 232, 139, 0.1); color: #7af0a5; }
+.style-pill.natural { background: rgba(139, 107, 232, 0.1); color: #b89ef5; }
+.style-pill.jovem { background: rgba(107, 200, 232, 0.1); color: #8ed4f0; }
+.style-pill.madura { background: rgba(232, 139, 77, 0.1); color: #f0b07a; }
+.style-pill.conversada { background: rgba(200, 107, 232, 0.1); color: #d48ef0; }
 
-.card-obs {
-  margin-top: 10px;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-style: italic;
-  line-height: 1.4;
-}
-
-/* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   header { padding: 24px 16px 16px; }
   .grid-container { padding: 16px; }
@@ -429,13 +412,11 @@ header {
   .grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ═══ SCROLLBAR ═══ */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 
-/* ═══ CARD ENTRANCE ANIMATION ═══ */
 .card { opacity: 0; transform: translateY(20px); animation: cardIn 0.5s ease forwards; }
 @keyframes cardIn {
   to { opacity: 1; transform: translateY(0); }
@@ -447,13 +428,7 @@ header {
 .card:nth-child(5) { animation-delay: 0.10s; }
 .card:nth-child(6) { animation-delay: 0.12s; }
 .card:nth-child(7) { animation-delay: 0.14s; }
-.card:nth-child(8) { animation-delay: 0.16s; }
-.card:nth-child(9) { animation-delay: 0.18s; }
-.card:nth-child(10) { animation-delay: 0.20s; }
-.card:nth-child(11) { animation-delay: 0.22s; }
-.card:nth-child(12) { animation-delay: 0.24s; }
 
-/* ═══ FOOTER ═══ */
 footer {
   position: relative;
   z-index: 10;
@@ -490,31 +465,24 @@ footer {
   <div class="search-section">
     <div class="search-bar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="searchInput" placeholder="Buscar por nome, estilo, cidade..." autocomplete="off">
+      <input type="text" id="searchInput" placeholder="Buscar por nome, estilo..." autocomplete="off">
     </div>
   </div>
 
   <div class="filters" id="filters">
-    <!-- Gênero -->
     <div class="filter-group">
       <span class="filter-group-label">Gênero</span>
       <button class="filter-chip" data-filter="genero" data-value="Masculino"><span class="dot male"></span>Masculino</button>
       <button class="filter-chip" data-filter="genero" data-value="Feminino"><span class="dot female"></span>Feminino</button>
     </div>
-
-    <!-- Nacionalidade -->
     <div class="filter-group">
       <span class="filter-group-label">Origem</span>
       <button class="filter-chip" data-filter="nacionalidade" data-value="Nacional"><span class="dot nacional"></span>🇧🇷 Nacional</button>
       <button class="filter-chip" data-filter="nacionalidade" data-value="Internacional"><span class="dot internacional"></span>🌍 Internacional</button>
     </div>
-
-    <!-- Estilos -->
     <div class="filter-group" id="style-filters">
       <span class="filter-group-label">Estilo</span>
     </div>
-
-    <!-- Limpar -->
     <button class="clear-btn" id="clearFilters">✕ Limpar filtros</button>
   </div>
 </header>
@@ -525,73 +493,107 @@ footer {
 
 <footer>
   Locutores — Diretório de Voz Profissional
+  <br><small style="opacity:0.5">Dados da planilha: Locutores · 7 vozes cadastradas</small>
 </footer>
 
 <script>
 // ════════════════════════════════════════════
-// DATA
+// DADOS REAIS DA PLANILHA
+// Fonte: https://docs.google.com/spreadsheets/d/1Oxf1ooZopUdU2dFtn16lKgENhvggRtzCTbt8UMkMmGk
 // ════════════════════════════════════════════
 const LOCUTORES = [
-  { nome: "João Silva", telefone: "(11) 99999-0001", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Institucional"], obs: "Locutor principal" },
-  { nome: "Maria Costa", telefone: "(11) 99999-0002", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Agudo", "Varejo", "Caricato"], obs: "Versátil, faz personagens" },
-  { nome: "Peter Brown", telefone: "+1 (555) 123-4567", genero: "Masculino", nacionalidade: "Internacional", estilos: ["Grave", "Institucional"], obs: "Locutor internacional EN/PT" },
-  { nome: "Ana Oliveira", telefone: "(21) 98888-0003", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Institucional", "Apresentação"], obs: "Locutora institucional" },
-  { nome: "Carlos Santos", telefone: "(31) 97777-0004", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Varejo", "Caricato", "Rádio"], obs: "Locutor de rádio FM" },
-  { nome: "Sarah Johnson", telefone: "+1 (555) 987-6543", genero: "Feminino", nacionalidade: "Internacional", estilos: ["Agudo", "Varejo"], obs: "Voz feminina internacional" },
-  { nome: "Lucas Mendes", telefone: "(11) 96666-0005", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Locução Esportiva"], obs: "Narrador esportivo" },
-  { nome: "Fernanda Lima", telefone: "(41) 95555-0006", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Agudo", "Institucional", "Apresentação"], obs: "Apresentadora e locutora" },
-  { nome: "Roberto Alves", telefone: "(19) 94444-0007", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Caricato", "Dublagem"], obs: "Dublador e ator" },
-  { nome: "Julia Martins", telefone: "(11) 93333-0008", genero: "Feminino", nacionalidade: "Nacional", estilos: ["Agudo", "Varejo", "Caricato", "Rádio"], obs: "Locução promocional" },
-  { nome: "Mike O'Brien", telefone: "+353 87 123 4567", genero: "Masculino", nacionalidade: "Internacional", estilos: ["Grave", "Institucional", "Apresentação"], obs: "Locutor irlandês EN" },
-  { nome: "Paulo Azevedo", telefone: "(15) 92222-0009", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Agudo", "Varejo", "Institucional", "Caricato"], obs: "Faz todos os estilos" },
+  {
+    nome: "Adriano Barbosa",
+    telefone: "88 9943-3260",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Grave", "Padrão", "Natural", "Institucional"],
+    obs: ""
+  },
+  {
+    nome: "Bruno Rochel",
+    telefone: "15 99774-8592",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Padrão", "Institucional", "Varejo", "Caricata", "Conversada", "Natural"],
+    obs: ""
+  },
+  {
+    nome: "Dan Rodrigues",
+    telefone: "18 98187-6689",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Jovem", "Caricata", "Institucional", "Varejo"],
+    obs: ""
+  },
+  {
+    nome: "Marcos Naza",
+    telefone: "11 97112-8022",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Grave", "Institucional", "Varejo", "Caricata"],
+    obs: ""
+  },
+  {
+    nome: "Zé Carlos",
+    telefone: "48 8827-9902",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Institucional", "Varejo", "Jovem", "Natural"],
+    obs: ""
+  },
+  {
+    nome: "Gustavo Zouain",
+    telefone: "27 98119-2627",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Madura", "Grave", "Institucional", "Natural"],
+    obs: ""
+  },
+  {
+    nome: "Renato Silva",
+    telefone: "27 98119-2627",
+    portfolio: "Drive",
+    genero: "Masculino",
+    nacionalidade: "Nacional",
+    estilos: ["Natural"],
+    obs: ""
+  }
 ];
 
-// ════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════
-const state = {
-  search: '',
-  genero: null,
-  nacionalidade: null,
-  estilos: new Set(),
-};
-
-// Extract all unique styles
+const state = { search: '', genero: null, nacionalidade: null, estilos: new Set() };
 const ALL_STYLES = [...new Set(LOCUTORES.flatMap(l => l.estilos))];
-
-// ════════════════════════════════════════════
-// DOM REFS
-// ════════════════════════════════════════════
 const grid = document.getElementById('locutorGrid');
 const searchInput = document.getElementById('searchInput');
 const totalCount = document.getElementById('total-count');
 const styleFiltersEl = document.getElementById('style-filters');
 const clearBtn = document.getElementById('clearFilters');
 
-// Avatar colors
 const COLORS = [
   ['#4d8bf0', '#2563eb'], ['#e86b8a', '#db2777'], ['#f0a84d', '#d97706'],
   ['#7c6be8', '#6d28d9'], ['#4de87b', '#16a34a'], ['#e84d6b', '#be123c'],
-  ['#4dd4e8', '#0891b2'], ['#a87be8', '#7c3aed'], ['#e8a84d', '#b45309'],
-  ['#e84d4d', '#b91c1c'], ['#4de8a8', '#0d9488'], ['#c84de8', '#a21caf'],
+  ['#4dd4e8', '#0891b2'],
 ];
 
-// ════════════════════════════════════════════
-// RENDER
-// ════════════════════════════════════════════
 function getInitials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 }
 
 function getWhatsAppLink(tel) {
   const digits = tel.replace(/\D/g, '');
-  return `https://wa.me/55${digits}`;
+  if (digits.length >= 10) return `https://wa.me/55${digits}`;
+  return null;
 }
 
 function cardHTML(locutor, index) {
   const colors = COLORS[index % COLORS.length];
-  const isBr = !locutor.telefone.startsWith('+');
-  const wspLink = isBr ? getWhatsAppLink(locutor.telefone) : null;
+  const wspLink = getWhatsAppLink(locutor.telefone);
   const initial = getInitials(locutor.nome);
 
   const stylePills = locutor.estilos.map(s => {
@@ -604,12 +606,12 @@ function cardHTML(locutor, index) {
       <div class="card-top">
         <div class="avatar" style="background: linear-gradient(135deg, ${colors[0]}, ${colors[1]});">
           ${initial}
-          <span class="flag">${locutor.nacionalidade === 'Internacional' ? '🌍' : '🇧🇷'}</span>
+          <span class="flag">🇧🇷</span>
         </div>
         <div class="card-info">
           <h3>${locutor.nome}</h3>
           <div class="card-meta">
-            <span class="badge ${locutor.genero.toLowerCase()}">${locutor.genero === 'Masculino' ? '♂' : '♀'} ${locutor.genero}</span>
+            <span class="badge ${locutor.genero.toLowerCase()}">♂ ${locutor.genero}</span>
             <span class="badge ${locutor.nacionalidade.toLowerCase()}">${locutor.nacionalidade}</span>
           </div>
         </div>
@@ -619,28 +621,26 @@ function cardHTML(locutor, index) {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           ${wspLink ? `<a href="${wspLink}" target="_blank">${locutor.telefone}</a>` : `<span>${locutor.telefone}</span>`}
         </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span class="drive-link">${locutor.portfolio}</span>
+        </div>
       </div>
       <div class="card-styles">${stylePills}</div>
-      ${locutor.obs ? `<div class="card-obs">${locutor.obs}</div>` : ''}
     </div>
   `;
 }
 
 function render() {
   const filtered = LOCUTORES.filter(l => {
-    // Search
     if (state.search) {
       const q = state.search.toLowerCase();
       const match = l.nome.toLowerCase().includes(q) ||
-        l.estilos.some(s => s.toLowerCase().includes(q)) ||
-        (l.obs && l.obs.toLowerCase().includes(q));
+        l.estilos.some(s => s.toLowerCase().includes(q));
       if (!match) return false;
     }
-    // Gender filter
     if (state.genero && l.genero !== state.genero) return false;
-    // Nationality filter
     if (state.nacionalidade && l.nacionalidade !== state.nacionalidade) return false;
-    // Style filter
     if (state.estilos.size > 0) {
       const hasAny = [...state.estilos].some(s => l.estilos.includes(s));
       if (!hasAny) return false;
@@ -663,9 +663,7 @@ function render() {
   grid.innerHTML = filtered.map((l, i) => cardHTML(l, i)).join('');
 }
 
-// ════════════════════════════════════════════
-// FILTER CHIPS
-// ════════════════════════════════════════════
+// Filter chips
 document.querySelectorAll('.filter-chip[data-filter]').forEach(btn => {
   btn.addEventListener('click', () => {
     const filter = btn.dataset.filter;
@@ -677,7 +675,6 @@ document.querySelectorAll('.filter-chip[data-filter]').forEach(btn => {
       state.nacionalidade = state.nacionalidade === value ? null : value;
     }
 
-    // Update active state
     document.querySelectorAll(`.filter-chip[data-filter="${filter}"]`).forEach(b => b.classList.remove('active'));
     if (filter === 'genero' && state.genero) {
       document.querySelector(`.filter-chip[data-filter="genero"][data-value="${state.genero}"]`).classList.add('active');
@@ -685,7 +682,6 @@ document.querySelectorAll('.filter-chip[data-filter]').forEach(btn => {
     if (filter === 'nacionalidade' && state.nacionalidade) {
       document.querySelector(`.filter-chip[data-filter="nacionalidade"][data-value="${state.nacionalidade}"]`).classList.add('active');
     }
-
     render();
   });
 });
@@ -723,14 +719,11 @@ clearBtn.addEventListener('click', () => {
   state.estilos.clear();
   state.search = '';
   searchInput.value = '';
-
   document.querySelectorAll('.filter-chip.active').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.style-tag.active').forEach(b => b.classList.remove('active'));
-
   render();
 });
 
-// Initial render
 render();
 </script>
 </body>
