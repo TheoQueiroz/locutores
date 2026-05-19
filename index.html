@@ -4,54 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Locutores — Diretório de Voz</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   RESET & ROOT
-   ═══════════════════════════════════════════ */
+/* ═══ ROOT ═══ */
 :root {
-  --bg: #0b0b12;
-  --surface: #13131d;
-  --surface-hover: #1c1c2e;
-  --border: #1e1e32;
-  --border-light: #2a2a48;
+  --bg: #0c0c14;
+  --surface: #14141e;
+  --surface-hover: #1c1c2c;
+  --card-bg: #151520;
+  --border: #1e1e30;
+  --border-light: #2a2a44;
   --text: #eeedf5;
   --text-dim: #8a89a0;
   --text-muted: #62617a;
   --gold: #f0b04c;
   --gold-light: #f7cd8a;
-  --gold-glow: rgba(240, 176, 76, 0.12);
+  --gold-glow: rgba(240, 176, 76, 0.15);
   --blue: #5b8def;
   --pink: #ed6b8e;
   --green: #5bed8a;
   --purple: #8b7bef;
   --cyan: #5bccef;
   --orange: #ef8b5b;
-  --radius: 18px;
-  --radius-sm: 12px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ═══ ANIMATED AMBIENT ═══ */
+/* ═══ AMBIENT ═══ */
 .ambient {
   position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
 }
 .ambient span {
-  position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.06;
+  position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.05;
 }
 .ambient .a1 { width: 700px; height: 700px; background: var(--gold); top: -15%; left: -10%; animation: drift 35s ease-in-out infinite; }
 .ambient .a2 { width: 550px; height: 550px; background: var(--purple); bottom: -20%; right: -10%; animation: drift 28s ease-in-out infinite reverse; }
 .ambient .a3 { width: 400px; height: 400px; background: var(--pink); top: 45%; left: 55%; animation: drift 40s ease-in-out infinite 8s; }
-
 @keyframes drift {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(60px, -50px) scale(1.12); }
@@ -61,80 +60,86 @@ body {
 /* ═══ HEADER ═══ */
 header {
   position: relative; z-index: 10;
-  padding: 36px 24px 16px; max-width: 1320px; margin: 0 auto;
+  padding: 32px 24px 12px; max-width: 1320px; margin: 0 auto;
 }
 .brand {
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
 }
 .brand-left h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 800;
   background: linear-gradient(135deg, #f7cd8a 0%, #f0b04c 40%, #e89530 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 1.1; letter-spacing: -0.01em;
 }
-.brand-left p {
-  font-size: 0.92rem; color: var(--text-dim); margin-top: 2px; font-weight: 400;
-}
+.brand-left p { font-size: 0.88rem; color: var(--text-dim); margin-top: 1px; font-weight: 400; }
 .badge-total {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; gap: 5px;
   background: var(--gold-glow); border: 1px solid rgba(240, 176, 76, 0.2);
-  border-radius: 100px; padding: 6px 18px; font-size: 0.82rem;
+  border-radius: 100px; padding: 5px 16px; font-size: 0.8rem;
   color: var(--gold); font-weight: 600; white-space: nowrap;
 }
-.badge-total svg { width: 16px; height: 16px; }
-#result-count { font-size: 1.1rem; }
+.badge-total svg { width: 15px; height: 15px; }
 
-/* ═══ SEARCH ═══ */
-.search-row {
-  margin-top: 22px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+/* ═══ SEARCH + RESULT COUNT ═══ */
+.toolbar {
+  margin-top: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
 }
 .search-wrap {
-  display: flex; align-items: center; flex: 1; min-width: 240px; max-width: 440px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-  padding: 0 16px; transition: all 0.3s;
+  display: flex; align-items: center; flex: 1; min-width: 200px; max-width: 400px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 0 14px; transition: all 0.3s;
 }
 .search-wrap:focus-within {
-  border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-glow);
+  border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow);
 }
-.search-wrap svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; }
+.search-wrap svg { width: 17px; height: 17px; color: var(--text-muted); flex-shrink: 0; }
 .search-wrap input {
-  flex: 1; background: transparent; border: none; padding: 13px 10px;
-  font-size: 0.92rem; color: var(--text); font-family: 'DM Sans', sans-serif;
+  flex: 1; background: transparent; border: none; padding: 11px 8px;
+  font-size: 0.9rem; color: var(--text); font-family: 'DM Sans', sans-serif;
   outline: none; min-width: 0;
 }
 .search-wrap input::placeholder { color: var(--text-muted); }
 #clearSearch {
   background: none; border: none; color: var(--text-muted); cursor: pointer;
-  padding: 6px; border-radius: 8px; font-size: 1rem; display: none;
+  padding: 4px; border-radius: 6px; font-size: 0.9rem; display: none;
   transition: color 0.2s;
 }
 #clearSearch:hover { color: var(--text); }
-#clearSearch.visible { display: block; }
+#clearSearch.show { display: block; }
+
+.result-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(91, 237, 138, 0.07); border: 1px solid rgba(91, 237, 138, 0.15);
+  border-radius: 100px; padding: 5px 14px; font-size: 0.82rem;
+  color: var(--green); font-weight: 600; white-space: nowrap;
+}
 
 /* ═══ FILTERS BAR ═══ */
 .filters-bar {
-  margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;
 }
-.filter-section {
-  display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
-  padding-right: 10px; border-right: 1px solid var(--border);
+.filter-block {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 8px 10px;
 }
-.filter-section:last-child { border-right: none; }
-.filter-label {
-  font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.2px;
-  color: var(--text-muted); font-weight: 700; margin-right: 2px;
+.filter-block-header {
+  font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 2px;
+}
+.filter-row {
+  display: flex; flex-wrap: wrap; gap: 4px;
 }
 
-/* Filter pill — base */
+/* ═══ PILLS — MUITO MAIS DESTAQUE ═══ */
 .pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 13px; border-radius: 100px;
-  font-size: 0.78rem; font-weight: 500; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 12px; border-radius: 100px;
+  font-size: 0.76rem; font-weight: 500; cursor: pointer;
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   border: 1.5px solid var(--border); background: transparent;
   color: var(--text-dim); font-family: 'DM Sans', sans-serif;
@@ -142,132 +147,151 @@ header {
 }
 .pill:hover {
   border-color: var(--border-light); color: var(--text);
-  background: rgba(255,255,255,0.025);
+  background: rgba(255,255,255,0.03);
+  transform: translateY(-1px);
 }
+/* ACTIVE STATE — SUPER DESTAQUE */
 .pill.active {
-  border-color: var(--gold); color: var(--gold);
-  background: var(--gold-glow); box-shadow: 0 0 18px var(--gold-glow);
+  border-color: var(--gold);
+  color: #fff;
+  background: linear-gradient(135deg, rgba(240, 176, 76, 0.2), rgba(240, 176, 76, 0.08));
+  box-shadow:
+    0 0 0 1.5px var(--gold),
+    0 0 20px rgba(240, 176, 76, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+  text-shadow: 0 0 8px rgba(240, 176, 76, 0.3);
 }
 .pill .dot {
   width: 5px; height: 5px; border-radius: 50%; display: inline-block;
 }
-.pill .dot.m { background: var(--blue); }
-.pill .dot.f { background: var(--pink); }
-.pill .dot.br { background: var(--green); }
-.pill .dot.int { background: var(--purple); }
+.pill .dot.m { background: var(--blue); box-shadow: 0 0 4px var(--blue); }
+.pill .dot.f { background: var(--pink); box-shadow: 0 0 4px var(--pink); }
+.pill .dot.br { background: var(--green); box-shadow: 0 0 4px var(--green); }
+.pill .dot.int { background: var(--purple); box-shadow: 0 0 4px var(--purple); }
 
-/* Style tags in filter bar */
-.sty-pill {
+/* Active dot glow */
+.pill.active .dot.m { box-shadow: 0 0 8px var(--blue); }
+.pill.active .dot.f { box-shadow: 0 0 8px var(--pink); }
+.pill.active .dot.br { box-shadow: 0 0 8px var(--green); }
+.pill.active .dot.int { box-shadow: 0 0 8px var(--purple); }
+
+/* ═══ STYLE PILLS ═══ */
+.spill {
   display: inline-flex; align-items: center;
-  padding: 4px 12px; border-radius: 100px;
-  font-size: 0.72rem; font-weight: 500; cursor: pointer;
+  padding: 4px 10px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 500; cursor: pointer;
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-  border: 1.5px solid transparent; font-family: 'DM Sans', sans-serif;
+  border: 1.5px solid transparent;
+  font-family: 'DM Sans', sans-serif;
   user-select: none; white-space: nowrap;
 }
-.sty-pill.grave { background: rgba(91, 141, 239, 0.1); color: #7aaaf5; border-color: rgba(91, 141, 239, 0.15); }
-.sty-pill.agudo { background: rgba(237, 107, 142, 0.1); color: #f58aaa; border-color: rgba(237, 107, 142, 0.15); }
-.sty-pill.varejo { background: rgba(240, 176, 76, 0.1); color: #f5c97a; border-color: rgba(240, 176, 76, 0.15); }
-.sty-pill.institucional { background: rgba(139, 123, 239, 0.1); color: #a99af5; border-color: rgba(139, 123, 239, 0.15); }
-.sty-pill.caricata { background: rgba(237, 107, 142, 0.1); color: #f58aaa; border-color: rgba(237, 107, 142, 0.15); }
-.sty-pill.padrao { background: rgba(91, 237, 138, 0.1); color: #7af5a5; border-color: rgba(91, 237, 138, 0.15); }
-.sty-pill.natural { background: rgba(139, 123, 239, 0.1); color: #b0a3f5; border-color: rgba(139, 123, 239, 0.15); }
-.sty-pill.jovem { background: rgba(91, 204, 239, 0.1); color: #8ad8f5; border-color: rgba(91, 204, 239, 0.15); }
-.sty-pill.madura { background: rgba(239, 139, 91, 0.1); color: #f5b08a; border-color: rgba(239, 139, 91, 0.15); }
-.sty-pill.conversada { background: rgba(200, 107, 239, 0.1); color: #d49af5; border-color: rgba(200, 107, 239, 0.15); }
+.spill.grave { background: rgba(91, 141, 239, 0.08); color: #88b0f5; border-color: rgba(91, 141, 239, 0.12); }
+.spill.agudo { background: rgba(237, 107, 142, 0.08); color: #f58aaa; border-color: rgba(237, 107, 142, 0.12); }
+.spill.varejo { background: rgba(240, 176, 76, 0.08); color: #f5c97a; border-color: rgba(240, 176, 76, 0.12); }
+.spill.institucional { background: rgba(139, 123, 239, 0.08); color: #a99af5; border-color: rgba(139, 123, 239, 0.12); }
+.spill.caricata { background: rgba(237, 107, 142, 0.08); color: #f58aaa; border-color: rgba(237, 107, 142, 0.12); }
+.spill.padrao { background: rgba(91, 237, 138, 0.08); color: #7af5a5; border-color: rgba(91, 237, 138, 0.12); }
+.spill.natural { background: rgba(139, 123, 239, 0.08); color: #b0a3f5; border-color: rgba(139, 123, 239, 0.12); }
+.spill.jovem { background: rgba(91, 204, 239, 0.08); color: #8ad8f5; border-color: rgba(91, 204, 239, 0.12); }
+.spill.madura { background: rgba(239, 139, 91, 0.08); color: #f5b08a; border-color: rgba(239, 139, 91, 0.12); }
+.spill.conversada { background: rgba(200, 107, 239, 0.08); color: #d49af5; border-color: rgba(200, 107, 239, 0.12); }
 
-.sty-pill:hover { filter: brightness(1.25); transform: translateY(-1px); }
-.sty-pill.active {
-  filter: brightness(1);
-  box-shadow: 0 0 20px rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.25);
+.spill:hover { filter: brightness(1.3); transform: translateY(-1px); }
+/* ACTIVE STYLE — GLOW + BORDER */
+.spill.active {
+  filter: brightness(1.2);
+  box-shadow: 0 0 16px rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
 }
 
+/* ═══ SOTAQUE PILLS ═══ */
+.spill.sotaque {
+  background: rgba(91, 204, 239, 0.06); color: #7dd0f0;
+  border-color: rgba(91, 204, 239, 0.1);
+}
+.spill.sotaque.active {
+  border-color: rgba(91, 204, 239, 0.4);
+  box-shadow: 0 0 16px rgba(91, 204, 239, 0.1);
+  background: rgba(91, 204, 239, 0.1);
+}
+
+/* ═══ CLEAR ALL ═══ */
 .clear-all {
+  display: inline-flex; align-items: center; gap: 4px;
   background: transparent; border: 1px dashed var(--border); color: var(--text-muted);
-  padding: 5px 14px; border-radius: 100px; font-size: 0.78rem; cursor: pointer;
-  transition: all 0.25s; font-family: 'DM Sans', sans-serif;
+  padding: 5px 12px; border-radius: 100px; font-size: 0.76rem; cursor: pointer;
+  transition: all 0.25s; font-family: 'DM Sans', sans-serif; white-space: nowrap;
+  margin-top: 2px;
 }
-.clear-all:hover { border-color: var(--pink); color: var(--pink); }
+.clear-all:hover { border-color: var(--pink); color: var(--pink); border-style: solid; }
 
 /* ═══ GRID ═══ */
-main {
-  position: relative; z-index: 10;
-  max-width: 1320px; margin: 20px auto; padding: 0 24px 60px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
+main { position: relative; z-index: 10; max-width: 1320px; margin: 16px auto; padding: 0 24px 50px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
 
 /* ═══ CARD ═══ */
 .card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: default; position: relative; overflow: hidden;
 }
 .card::before {
   content: ''; position: absolute; inset: 0; border-radius: var(--radius);
-  opacity: 0; transition: opacity 0.5s;
-  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(240,176,76,0.035) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.4s;
+  background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(240,176,76,0.03) 0%, transparent 70%);
   pointer-events: none;
 }
 .card:hover {
-  border-color: var(--border-light);
-  transform: translateY(-3px);
-  box-shadow: 0 18px 36px -12px rgba(0,0,0,0.5);
+  border-color: var(--border-light); transform: translateY(-3px);
+  box-shadow: 0 16px 32px -12px rgba(0,0,0,0.5);
   background: var(--surface-hover);
 }
 .card:hover::before { opacity: 1; }
 
-.card-top {
-  display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
-}
+.card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .avatar {
-  width: 50px; height: 50px; border-radius: 50%;
+  width: 46px; height: 46px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: 'DM Sans', sans-serif; font-weight: 700;
-  font-size: 1.15rem; color: #fff; flex-shrink: 0;
-  position: relative;
+  font-size: 1.05rem; color: #fff; flex-shrink: 0;
+  position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 .card-info { flex: 1; min-width: 0; }
 .card-info h3 {
-  font-family: 'DM Sans', sans-serif; font-size: 1.05rem;
-  font-weight: 700; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.meta { display: flex; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
+.meta { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
 .tag {
   display: inline-flex; align-items: center; gap: 3px;
-  padding: 1px 9px; border-radius: 8px; font-size: 0.65rem; font-weight: 600;
+  padding: 1px 8px; border-radius: 6px; font-size: 0.62rem; font-weight: 600;
 }
 .tag.masc { background: rgba(91, 141, 239, 0.08); color: var(--blue); }
-.tag.fem { background: rgba(237, 107, 142, 0.08); color: var(--pink); }
 .tag.nac { background: rgba(91, 237, 138, 0.08); color: var(--green); }
-.tag.int { background: rgba(139, 123, 239, 0.08); color: var(--purple); }
+.tag.sotaque { background: rgba(91, 204, 239, 0.08); color: var(--cyan); }
 
-.contact { margin: 10px 0; display: flex; flex-direction: column; gap: 3px; }
+.contact { margin: 8px 0; display: flex; flex-direction: column; gap: 3px; }
 .c-item {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 0.8rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; color: var(--text-dim);
 }
-.c-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.4; }
+.c-item svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.4; }
 .c-item a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
 .c-item a:hover { color: var(--gold); }
-.c-item .drive { color: var(--gold); opacity: 0.7; font-weight: 500; }
+.c-item .drive { color: var(--gold); opacity: 0.8; font-weight: 500; font-size: 0.76rem; }
+.c-item .drive-link { color: var(--gold); font-weight: 500; text-decoration: none; }
+.c-item .drive-link:hover { text-decoration: underline; color: var(--gold-light); }
 
-.divider { height: 1px; background: var(--border); margin: 10px 0; }
-
-.style-wrap {
-  display: flex; flex-wrap: wrap; gap: 5px;
-}
+.divider { height: 1px; background: var(--border); margin: 8px 0; }
+.style-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
 .s-pill {
-  display: inline-flex; padding: 2px 9px; border-radius: 6px;
-  font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2px; text-transform: uppercase;
+  display: inline-flex; padding: 2px 8px; border-radius: 5px;
+  font-size: 0.58rem; font-weight: 600; letter-spacing: 0.2px; text-transform: uppercase;
 }
-.s-pill.grave { background: rgba(91, 141, 239, 0.08); color: #7aaaf5; }
+.s-pill.grave { background: rgba(91, 141, 239, 0.08); color: #88b0f5; }
 .s-pill.agudo { background: rgba(237, 107, 142, 0.08); color: #f58aaa; }
 .s-pill.varejo { background: rgba(240, 176, 76, 0.08); color: #f5c97a; }
 .s-pill.institucional { background: rgba(139, 123, 239, 0.08); color: #a99af5; }
@@ -279,62 +303,44 @@ main {
 .s-pill.conversada { background: rgba(200, 107, 239, 0.08); color: #d49af5; }
 
 /* ═══ EMPTY ═══ */
-.empty {
-  grid-column: 1 / -1; text-align: center; padding: 60px 20px;
-}
-.empty svg { width: 56px; height: 56px; opacity: 0.2; margin-bottom: 14px; }
-.empty h3 { font-size: 1.15rem; margin-bottom: 6px; color: var(--text-dim); }
-.empty p { font-size: 0.85rem; color: var(--text-muted); }
+.empty { grid-column: 1 / -1; text-align: center; padding: 50px 20px; }
+.empty svg { width: 50px; height: 50px; opacity: 0.2; margin-bottom: 12px; }
+.empty h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--text-dim); }
+.empty p { font-size: 0.82rem; color: var(--text-muted); }
+
+/* ═══ LOADING ═══ */
+.loading { text-align: center; padding: 70px 20px; }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 14px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading p { color: var(--text-dim); font-size: 0.85rem; }
+.loading small { color: var(--text-muted); font-size: 0.75rem; display: block; margin-top: 4px; }
 
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
-  header { padding: 24px 14px 12px; }
-  main { padding: 14px; margin-top: 12px; }
-  .grid { grid-template-columns: 1fr; gap: 12px; }
-  .filter-section { border-right: none; padding-right: 0; width: 100%; }
+  header { padding: 20px 14px 10px; }
+  main { padding: 14px; margin-top: 10px; }
+  .grid { grid-template-columns: 1fr; gap: 10px; }
+  .filter-block { width: 100%; }
 }
 
 /* ═══ CARD ENTRANCE ═══ */
-.card {
-  opacity: 0; transform: translateY(16px) scale(0.97);
-  animation: fadeUp 0.45s ease forwards;
-}
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.card:nth-child(1) { animation-delay: 0.02s; }
-.card:nth-child(2) { animation-delay: 0.04s; }
-.card:nth-child(3) { animation-delay: 0.06s; }
-.card:nth-child(4) { animation-delay: 0.08s; }
-.card:nth-child(5) { animation-delay: 0.10s; }
-.card:nth-child(6) { animation-delay: 0.12s; }
-.card:nth-child(7) { animation-delay: 0.14s; }
+.card { opacity: 0; transform: translateY(14px); animation: fadeUp 0.4s ease forwards; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+.card:nth-child(1) { animation-delay: 0.01s; }
+.card:nth-child(2) { animation-delay: 0.02s; }
+.card:nth-child(3) { animation-delay: 0.03s; }
+.card:nth-child(4) { animation-delay: 0.04s; }
+.card:nth-child(5) { animation-delay: 0.05s; }
+.card:nth-child(6) { animation-delay: 0.06s; }
+.card:nth-child(7) { animation-delay: 0.07s; }
+.card:nth-child(8) { animation-delay: 0.08s; }
+.card:nth-child(9) { animation-delay: 0.09s; }
+.card:nth-child(10) { animation-delay: 0.10s; }
 
-/* ═══ FOOTER ═══ */
 footer {
-  position: relative; z-index: 10;
-  text-align: center; padding: 24px 20px; color: var(--text-muted);
-  font-size: 0.78rem; border-top: 1px solid var(--border);
-  max-width: 1320px; margin: 0 auto;
+  position: relative; z-index: 10; text-align: center; padding: 20px; color: var(--text-muted);
+  font-size: 0.75rem; border-top: 1px solid var(--border); max-width: 1320px; margin: 0 auto;
 }
-
-/* ═══ LOADING ═══ */
-.loading-state {
-  text-align: center; padding: 80px 20px;
-}
-.loading-spinner {
-  width: 36px; height: 36px; border: 3px solid var(--border);
-  border-top-color: var(--gold); border-radius: 50%;
-  animation: spin 0.7s linear infinite; margin: 0 auto 16px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-state p { color: var(--text-dim); font-size: 0.9rem; }
-
-/* ═══ SCROLLBAR ═══ */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 </style>
 </head>
 <body>
@@ -353,204 +359,218 @@ footer {
     </div>
     <div class="badge-total">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-      <span><span id="total-count">0</span> vozes</span>
+      <span><span id="totalCount">0</span> vozes</span>
     </div>
   </div>
 
-  <div class="search-row">
+  <div class="toolbar">
     <div class="search-wrap">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="searchInput" placeholder="Buscar por nome, estilo..." autocomplete="off">
+      <input type="text" id="searchInput" placeholder="Buscar por nome, estilo, sotaque..." autocomplete="off">
       <button id="clearSearch">✕</button>
     </div>
-    <div class="badge-total" style="background:rgba(91,237,138,0.08);border-color:rgba(91,237,138,0.15);color:var(--green)">
-      <span id="result-count">0</span> <span id="result-label">resultados</span>
-    </div>
+    <span class="result-badge"><span id="resultCount">0</span> <span id="resultLabel">resultados</span></span>
   </div>
 
   <div class="filters-bar" id="filtersBar">
     <!-- Gênero -->
-    <div class="filter-section">
-      <span class="filter-label">Gênero</span>
-      <button class="pill" data-group="genero" data-val="Masculino"><span class="dot m"></span>Masculino</button>
-      <button class="pill" data-group="genero" data-val="Feminino"><span class="dot f"></span>Feminino</button>
+    <div class="filter-block">
+      <span class="filter-block-header">Gênero</span>
+      <div class="filter-row">
+        <button class="pill" data-group="genero" data-val="Masculino"><span class="dot m"></span>Masculino</button>
+        <button class="pill" data-group="genero" data-val="Feminino"><span class="dot f"></span>Feminino</button>
+      </div>
     </div>
 
     <!-- Origem -->
-    <div class="filter-section">
-      <span class="filter-label">Origem</span>
-      <button class="pill" data-group="origem" data-val="Nacional"><span class="dot br"></span>🇧🇷 Nacional</button>
-      <button class="pill" data-group="origem" data-val="Internacional"><span class="dot int"></span>🌍 Internacional</button>
+    <div class="filter-block">
+      <span class="filter-block-header">Origem</span>
+      <div class="filter-row">
+        <button class="pill" data-group="origem" data-val="Nacional"><span class="dot br"></span>🇧🇷 Nacional</button>
+        <button class="pill" data-group="origem" data-val="Internacional"><span class="dot int"></span>🌍 Internacional</button>
+      </div>
     </div>
 
-    <!-- Estilos -->
-    <div class="filter-section" id="styleFilters">
-      <span class="filter-label">Estilo</span>
+    <!-- Estilo -->
+    <div class="filter-block" id="styleBlock">
+      <span class="filter-block-header">Estilo</span>
+      <div class="filter-row" id="styleFilters"></div>
     </div>
 
-    <button class="clear-all" id="clearAll">✕ Limpar</button>
+    <!-- Sotaque -->
+    <div class="filter-block" id="sotaqueBlock">
+      <span class="filter-block-header">Sotaque</span>
+      <div class="filter-row" id="sotaqueFilters"></div>
+    </div>
+
+    <button class="clear-all" id="clearAll">✕ Limpar filtros</button>
   </div>
 </header>
 
 <main>
   <div id="app">
-    <div class="loading-state">
-      <div class="loading-spinner"></div>
-      <p>Carregando locutores da planilha...</p>
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Carregando locutores...</p>
+      <small>Buscando dados da planilha</small>
     </div>
   </div>
 </main>
 
 <footer>
-  Locutores — Diretório de Voz Profissional
-  <br><small style="opacity:0.5">Dados ao vivo da planilha · Atualize a planilha e recarregue a página</small>
+  Locutores — Dados ao vivo da planilha · Atualize e recarregue
 </footer>
 
 <script>
 // ═══════════════════════════════════════════════════════
-//  CONFIG
+// CONFIG
 // ═══════════════════════════════════════════════════════
 const SHEET_ID = "1Oxf1ooZopUdU2dFtn16lKgENhvggRtzCTbt8UMkMmGk";
 const SHEET_GID = "761088805";
 const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
 
+// ═══ COLE A URL DO APPS SCRIPT AQUI ═══
+// Depois de implantar o web app (veja AppsScript.gs), cole a URL abaixo:
+const APPS_SCRIPT_URL = "";
+
 // ═══════════════════════════════════════════════════════
-//  STATE
+// STATE
 // ═══════════════════════════════════════════════════════
 let LOCUTORES = [];
-const state = {
-  search: '',
-  genero: [],       // multiple values allowed
-  origem: [],       // multiple values allowed
-  estilos: [],      // multiple values allowed
-};
+const state = { search: '', genero: [], origem: [], estilos: [], sotaques: [] };
 
 const COLORS = [
-  ['#5b8def', '#3b6fd4'], ['#ed6b8e', '#d45074'], ['#f0b04c', '#d4932e'],
-  ['#8b7bef', '#6d5bd4'], ['#5bed8a', '#3bd46e'], ['#ef8b5b', '#d46e3b'],
-  ['#5bccef', '#3baed4'],
+  ['#5b8def','#3b6fd4'],['#ed6b8e','#d45074'],['#f0b04c','#d4932e'],
+  ['#8b7bef','#6d5bd4'],['#5bed8a','#3bd46e'],['#ef8b5b','#d46e3b'],
+  ['#5bccef','#3baed4'],['#ed5b8b','#d43b6e'],['#8bef5b','#6bd43b'],
+  ['#ef5b8b','#d43b6b'],
 ];
 
 // ═══════════════════════════════════════════════════════
-//  DOM REFS
+// DOM
 // ═══════════════════════════════════════════════════════
 const app = document.getElementById('app');
-const grid = document.createElement('div');
-grid.className = 'grid';
-const totalCount = document.getElementById('total-count');
-const resultCount = document.getElementById('result-count');
-const resultLabel = document.getElementById('result-label');
-const searchInput = document.getElementById('searchInput');
-const clearSearch = document.getElementById('clearSearch');
-const clearAll = document.getElementById('clearAll');
-const styleFilters = document.getElementById('styleFilters');
+const grid = Object.assign(document.createElement('div'), { className: 'grid' });
+const $ = id => document.getElementById(id);
+const totalCount = $('totalCount');
+const resultCount = $('resultCount');
+const resultLabel = $('resultLabel');
+const searchInput = $('searchInput');
+const clearSearch = $('clearSearch');
+const clearAll = $('clearAll');
+const styleFilters = $('styleFilters');
+const sotaqueFilters = $('sotaqueFilters');
 
 // ═══════════════════════════════════════════════════════
-//  UTILITIES
+// HELPERS
 // ═══════════════════════════════════════════════════════
-function getInitials(name) {
-  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-}
+const initials = s => s.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+const waLink = t => { const d = t.replace(/\D/g,''); return d.length >= 10 ? `https://wa.me/55${d}` : null; };
 
-function getWhatsApp(tel) {
-  const d = tel.replace(/\D/g, '');
-  if (d.length >= 10) return `https://wa.me/55${d}`;
-  return null;
-}
-
-function parseStyles(text) {
-  if (!text || !text.trim()) return [];
-  return text.split(',').map(s => s.trim()).filter(s => s.length > 0).map(s => s.replace(/\.$/, ''));
-}
-
-function normalize(s) {
-  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
-// ═══════════════════════════════════════════════════════
-//  FETCH DATA FROM GOOGLE SHEETS
-// ═══════════════════════════════════════════════════════
-async function fetchLocutores() {
-  const resp = await fetch(CSV_URL);
-  const csv = await resp.text();
-  const lines = csv.split(/\r?\n/).filter(l => l.trim());
-  const result = [];
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
   let started = false;
-
+  const result = [];
   for (const line of lines) {
-    // Parse CSV respecting quotes
     const parts = [];
-    let current = '';
-    let inQuotes = false;
+    let cur = '', q = false;
     for (const ch of line) {
-      if (ch === '"') { inQuotes = !inQuotes; continue; }
-      if (ch === ',' && !inQuotes) { parts.push(current); current = ''; continue; }
-      current += ch;
+      if (ch === '"') { q = !q; continue; }
+      if (ch === ',' && !q) { parts.push(cur); cur = ''; continue; }
+      cur += ch;
     }
-    parts.push(current);
-
-    if (!started) {
-      if (parts[0] === 'Nome') { started = true; }
-      continue;
-    }
-
+    parts.push(cur);
+    if (!started) { if (parts[0] === 'Nome') started = true; continue; }
     const nome = (parts[0] || '').trim();
     if (!nome) continue;
-
-    const telefone = (parts[1] || '').trim();
-    const portfolio = (parts[2] || '').trim();
-    const estilosRaw = (parts[3] || '').trim();
-
-    // Detect gender and nationality from data
-    // All from DDDs: 88 (CE), 15 (SP interior), 18 (SP interior), 11 (SP capital), 48 (SC), 27 (ES)
-    // All names are Brazilian / male
-    const genero = 'Masculino';
-    const nacionalidade = 'Nacional';
-    const estilos = parseStyles(estilosRaw);
-
-    result.push({ nome, telefone, portfolio, genero, nacionalidade, estilos });
+    const raw = s => (s || '').trim();
+    const styles = (parts[3] || '').split(',').map(s => s.trim().replace(/\.$/,'')).filter(Boolean);
+    const sotaques = (parts[4] || '').split(',').map(s => s.trim()).filter(Boolean);
+    result.push({
+      nome, telefone: raw(parts[1]), portfolio: raw(parts[2]),
+      genero: 'Masculino', nacionalidade: 'Nacional',
+      estilos: styles, sotaques
+    });
   }
-
   return result;
 }
 
+function uniq(arr) { return [...new Set(arr)]; }
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
 // ═══════════════════════════════════════════════════════
-//  GET ALL UNIQUE STYLES
+// FETCH
 // ═══════════════════════════════════════════════════════
-function getAllStyles(loc) {
-  const set = new Set();
-  loc.forEach(l => l.estilos.forEach(s => set.add(s)));
-  return [...set];
+async function fetchData() {
+  // Try Apps Script first (has real Drive links)
+  if (APPS_SCRIPT_URL) {
+    try {
+      const r = await fetch(APPS_SCRIPT_URL, { signal: AbortSignal.timeout(8000) });
+      const json = await r.json();
+      if (Array.isArray(json) && json.length) return json.map(item => {
+        const nome = (item.Nome || '').trim();
+        if (!nome) return null;
+        const styles = (item['Estilo de Locução'] || '').split(',').map(s => s.trim().replace(/\.$/,'')).filter(Boolean);
+        const sotaques = (item['Sotaque'] || '').split(',').map(s => s.trim()).filter(Boolean);
+        return {
+          nome, telefone: (item.WhatsApp || '').trim(),
+          portfolio: (item['Link do Portfólio'] || '').trim(),
+          genero: 'Masculino', nacionalidade: 'Nacional',
+          estilos: styles, sotaques
+        };
+      }).filter(Boolean);
+    } catch(e) { console.warn('Apps Script falhou, fallback CSV:', e); }
+  }
+
+  // Fallback: CSV
+  const resp = await fetch(CSV_URL);
+  const csv = await resp.text();
+  return parseCSV(csv);
 }
 
 // ═══════════════════════════════════════════════════════
-//  RENDER CARD
+// RENDER
 // ═══════════════════════════════════════════════════════
 function cardHTML(l, idx) {
   const c = COLORS[idx % COLORS.length];
-  const wp = getWhatsApp(l.telefone);
-  const init = getInitials(l.nome);
+  const wp = waLink(l.telefone);
+  const init = initials(l.nome);
 
-  const styleTags = l.estilos.map(s => {
-    const cls = normalize(s).replace(/\s+/g, '-');
+  const st = l.estilos.map(s => {
+    const cls = norm(s).replace(/\s+/g,'-');
     return `<span class="s-pill ${cls}">${s}</span>`;
   }).join('');
+
+  // Portfolio link
+  let portHtml = '';
+  if (l.portfolio && l.portfolio !== 'Drive' && l.portfolio !== '') {
+    if (l.portfolio.startsWith('http')) {
+      portHtml = `<a href="${l.portfolio}" target="_blank" class="drive-link">🔊 Portfólio</a>`;
+    } else {
+      portHtml = `<span class="drive">📁 ${l.portfolio}</span>`;
+    }
+  } else {
+    portHtml = `<span class="drive">📁 Portfólio</span>`;
+  }
+
+  // Sotaque tags
+  const sq = l.sotaques && l.sotaques.length > 0
+    ? l.sotaques.map(s => `<span class="tag sotaque">🗣 ${s}</span>`).join('')
+    : '';
 
   return `
     <div class="card">
       <div class="card-top">
-        <div class="avatar" style="background:linear-gradient(135deg,${c[0]},${c[1]})">
-          ${init}
-        </div>
+        <div class="avatar" style="background:linear-gradient(135deg,${c[0]},${c[1]})">${init}</div>
         <div class="card-info">
           <h3>${l.nome}</h3>
           <div class="meta">
             <span class="tag masc">♂ Masc</span>
             <span class="tag nac">🇧🇷 Nacional</span>
+            ${sq}
           </div>
         </div>
       </div>
-
       <div class="contact">
         <div class="c-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -558,41 +578,29 @@ function cardHTML(l, idx) {
         </div>
         <div class="c-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          ${l.portfolio && l.portfolio !== 'Drive' && l.portfolio !== ''
-            ? `<a href="${l.portfolio}" target="_blank" class="drive">🔊 Portfólio</a>`
-            : `<span class="drive">📁 Portfólio (Drive)</span>`
-          }
+          ${portHtml}
         </div>
       </div>
-
       <div class="divider"></div>
-
-      <div class="style-wrap">${styleTags}</div>
+      <div class="style-wrap">${st}</div>
     </div>
   `;
 }
 
-// ═══════════════════════════════════════════════════════
-//  RENDER GRID
-// ═══════════════════════════════════════════════════════
 function render() {
+  const q = state.search ? norm(state.search) : '';
+
   const filtered = LOCUTORES.filter(l => {
-    // Search
-    if (state.search) {
-      const q = normalize(state.search);
-      const match = normalize(l.nome).includes(q) ||
-        l.estilos.some(s => normalize(s).includes(q));
+    if (q) {
+      const match = norm(l.nome).includes(q) ||
+        l.estilos.some(s => norm(s).includes(q)) ||
+        l.sotaques.some(s => norm(s).includes(q));
       if (!match) return false;
     }
-    // Gender (OR logic within group)
-    if (state.genero.length > 0 && !state.genero.includes(l.genero)) return false;
-    // Origin (OR logic within group)
-    if (state.origem.length > 0 && !state.origem.includes(l.nacionalidade)) return false;
-    // Style (AND logic - must have ALL selected styles)
-    if (state.estilos.length > 0) {
-      const hasAll = state.estilos.every(s => l.estilos.includes(s));
-      if (!hasAll) return false;
-    }
+    if (state.genero.length && !state.genero.includes(l.genero)) return false;
+    if (state.origem.length && !state.origem.includes(l.nacionalidade)) return false;
+    if (state.estilos.length && !state.estilos.every(s => l.estilos.includes(s))) return false;
+    if (state.sotaques.length && !state.sotaques.every(s => l.sotaques.includes(s))) return false;
     return true;
   });
 
@@ -600,13 +608,8 @@ function render() {
   resultCount.textContent = filtered.length;
   resultLabel.textContent = filtered.length === 1 ? 'resultado' : 'resultados';
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="empty">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <h3>Nenhum locutor encontrado</h3>
-        <p>Tente ajustar os filtros ou buscar por outro termo</p>
-      </div>`;
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><h3>Nenhum locutor encontrado</h3><p>Tente limpar os filtros ou buscar por outro termo</p></div>`;
     return;
   }
 
@@ -614,103 +617,90 @@ function render() {
 }
 
 // ═══════════════════════════════════════════════════════
-//  SETUP FILTERS
+// SETUP FILTERS
 // ═══════════════════════════════════════════════════════
-function setupFilters() {
+function setupUI() {
   // Pills (gender, origin)
   document.querySelectorAll('.pill[data-group]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const group = btn.dataset.group;
-      const val = btn.dataset.val;
-      const arr = group === 'genero' ? state.genero :
-                  group === 'origem' ? state.origem : [];
-
-      const idx = arr.indexOf(val);
-      if (idx >= 0) {
-        arr.splice(idx, 1);
-      } else {
-        arr.push(val);
-      }
-
+      const g = btn.dataset.group;
+      const v = btn.dataset.val;
+      const arr = g === 'genero' ? state.genero : state.origem;
+      const i = arr.indexOf(v);
+      if (i >= 0) { arr.splice(i, 1); } else { arr.push(v); }
       btn.classList.toggle('active');
       render();
     });
   });
 
   // Style pills
-  const allStyles = getAllStyles(LOCUTORES);
-  allStyles.forEach(style => {
-    const cls = normalize(style).replace(/\s+/g, '-');
-    const btn = document.createElement('button');
-    btn.className = `sty-pill ${cls}`;
-    btn.textContent = style;
+  const allStyles = uniq(LOCUTORES.flatMap(l => l.estilos));
+  allStyles.forEach(st => {
+    const cls = norm(st).replace(/\s+/g, '-');
+    const btn = Object.assign(document.createElement('button'), { className: `spill ${cls}`, textContent: st });
     btn.addEventListener('click', () => {
-      const idx = state.estilos.indexOf(style);
-      if (idx >= 0) {
-        state.estilos.splice(idx, 1);
-        btn.classList.remove('active');
-      } else {
-        state.estilos.push(style);
-        btn.classList.add('active');
-      }
+      const i = state.estilos.indexOf(st);
+      if (i >= 0) { state.estilos.splice(i, 1); btn.classList.remove('active'); }
+      else { state.estilos.push(st); btn.classList.add('active'); }
       render();
     });
     styleFilters.appendChild(btn);
   });
 
+  // Sotaque pills
+  const allSotaques = uniq(LOCUTORES.flatMap(l => l.sotaques));
+  allSotaques.forEach(sq => {
+    const cls = norm(sq).replace(/\s+/g, '-');
+    const btn = Object.assign(document.createElement('button'), { className: `spill sotaque ${cls}`, textContent: sq });
+    btn.addEventListener('click', () => {
+      const i = state.sotaques.indexOf(sq);
+      if (i >= 0) { state.sotaques.splice(i, 1); btn.classList.remove('active'); }
+      else { state.sotaques.push(sq); btn.classList.add('active'); }
+      render();
+    });
+    sotaqueFilters.appendChild(btn);
+  });
+
   // Search
   searchInput.addEventListener('input', () => {
     state.search = searchInput.value;
-    clearSearch.classList.toggle('visible', !!state.search);
+    clearSearch.classList.toggle('show', !!state.search);
     render();
   });
-
   clearSearch.addEventListener('click', () => {
-    state.search = '';
-    searchInput.value = '';
-    clearSearch.classList.remove('visible');
-    render();
+    state.search = ''; searchInput.value = '';
+    clearSearch.classList.remove('show'); render();
   });
 
   // Clear all
   clearAll.addEventListener('click', () => {
-    state.genero = [];
-    state.origem = [];
-    state.estilos = [];
-    state.search = '';
-    searchInput.value = '';
-    clearSearch.classList.remove('visible');
-    document.querySelectorAll('.pill.active').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.sty-pill.active').forEach(b => b.classList.remove('active'));
+    Object.keys(state).forEach(k => { if (Array.isArray(state[k])) state[k] = []; });
+    state.search = ''; searchInput.value = '';
+    clearSearch.classList.remove('show');
+    document.querySelectorAll('.pill.active, .spill.active').forEach(b => b.classList.remove('active'));
     render();
   });
 }
 
 // ═══════════════════════════════════════════════════════
-//  INIT
+// INIT
 // ═══════════════════════════════════════════════════════
 async function init() {
   try {
-    LOCUTORES = await fetchLocutores();
+    LOCUTORES = await fetchData();
   } catch (e) {
-    // Fallback to embedded data if fetch fails
-    LOCUTORES = [
-      { nome: "Adriano Barbosa", telefone: "88 9943-3260", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Padrão", "Natural", "Institucional"] },
-      { nome: "Bruno Rochel", telefone: "15 99774-8592", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Padrão", "Institucional", "Varejo", "Caricata", "Conversada", "Natural"] },
-      { nome: "Dan Rodrigues", telefone: "18 98187-6689", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Jovem", "Caricata", "Institucional", "Varejo"] },
-      { nome: "Marcos Naza", telefone: "11 97112-8022", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Grave", "Institucional", "Varejo", "Caricata"] },
-      { nome: "Zé Carlos", telefone: "48 8827-9902", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Institucional", "Varejo", "Jovem", "Natural"] },
-      { nome: "Gustavo Zouain", telefone: "27 98119-2627", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Madura", "Grave", "Institucional", "Natural"] },
-      { nome: "Renato Silva", telefone: "87 9166-1696", portfolio: "Drive", genero: "Masculino", nacionalidade: "Nacional", estilos: ["Natural"] },
-    ];
-    console.warn('Falha ao carregar da planilha, usando dados locais');
+    console.error('Falha ao carregar:', e);
+    LOCUTORES = [];
   }
 
-  // Clear loading state
   app.innerHTML = '';
-  app.appendChild(grid);
+  if (LOCUTORES.length === 0) {
+    app.innerHTML = '<div class="empty"><h3>Erro ao carregar dados</h3><p>Não foi possível conectar à planilha</p></div>';
+    return;
+  }
 
-  setupFilters();
+  app.appendChild(grid);
+  setupUI();
   render();
 }
 
