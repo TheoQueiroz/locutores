@@ -200,10 +200,14 @@ footer { position: relative; z-index: 10; text-align: center; padding: 20px; col
 <script>
 // ═══ CONFIG ═══
 const SHEET_ID = "1Oxf1ooZopUdU2dFtn16lKgENhvggRtzCTbt8UMkMmGk";
-const SHEET_GID = "761088805";
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+const SHEET_GID_MASC = "761088805";
+const SHEET_GID_FEM = "865447594";
+const SHEET_GID_INT = "7108820";
+const CSV_URL_MASC = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID_MASC}`;
+const CSV_URL_FEM = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID_FEM}`;
+const CSV_URL_INT = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID_INT}`;
 // ★ COLE A URL DO APPS SCRIPT ABAIXO ★
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz5CpIlsjBJzw9lsAfQZqdzuKSKhmnXyUgFAXJnuD0VJ5jbbQgZzC3RzjJV8FWBZMpTzw/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfdwUwHPSsrkH6QiIySe9bnPDcDST2nMLHWtlJeW-u3naBvJp8RrxH2XcUql4z-nHksQ/exec";
 // ═══ STATE ═══
 let LOCUTORES = [];
 const state = { search: '', genero: [], origem: [], estilos: [], sotaques: [] };
@@ -222,7 +226,7 @@ const initials = s => s.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(
 const waLink = t => { const d=t.replace(/\D/g,''); return d.length>=10?`https://wa.me/55${d}`:null; };
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
-function parseCSV(text) {
+function parseCSV(text, genero, nacionalidade) {
   const lines = text.split(/\r?\n/).filter(l=>l.trim());
   let started = false; const result = [];
   for (const line of lines) {
@@ -233,9 +237,10 @@ function parseCSV(text) {
     const nome = (parts[0]||'').trim(); if(!nome) continue;
     result.push({
       nome, telefone: (parts[1]||'').trim(), portfolio: (parts[2]||'').trim(),
-      genero: 'Masculino', nacionalidade: 'Nacional',
+      genero: genero, nacionalidade: nacionalidade,
       estilos: (parts[3]||'').split(',').map(s=>s.trim().replace(/\.$/,'')).filter(Boolean),
-      sotaques: (parts[4]||'').split(',').map(s=>s.trim()).filter(Boolean)
+      sotaques: (parts[4]||'').split(',').map(s=>s.trim()).filter(Boolean),
+      foto: (parts[5]||'').trim()
     });
   }
   return result;
@@ -243,28 +248,37 @@ function parseCSV(text) {
 
 // ═══ FETCH ═══
 async function fetchData() {
-  // Tenta Apps Script primeiro (tem os links reais do Drive)
-  if (APPS_SCRIPT_URL) {
-    try {
-      const r = await fetch(APPS_SCRIPT_URL, { signal: AbortSignal.timeout(10000) });
-      const json = await r.json();
-      if (Array.isArray(json) && json.length) {
-        return json.map(item => {
-          const nome = (item.Nome||'').trim(); if(!nome) return null;
-          return {
-            nome, telefone: (item.WhatsApp||'').trim(),
-            portfolio: (item['Link do Portfólio']||'').trim(),
-            genero: 'Masculino', nacionalidade: 'Nacional',
-            estilos: (item['Estilo de Locução']||'').split(',').map(s=>s.trim().replace(/\.$/,'')).filter(Boolean),
-            sotaques: (item['Sotaque']||'').split(',').map(s=>s.trim()).filter(Boolean)
-          };
-        }).filter(Boolean);
-      }
-    } catch(e) { console.warn('Apps Script falhou:', e); }
+  if (!APPS_SCRIPT_URL) {
+    throw new Error('APPS_SCRIPT_URL não configurado');
   }
-  // Fallback: CSV
-  const resp = await fetch(CSV_URL);
-  return parseCSV(await resp.text());
+  
+  try {
+    const r = await fetch(APPS_SCRIPT_URL, { signal: AbortSignal.timeout(15000) });
+    const json = await r.json();
+    
+    if (Array.isArray(json) && json.length) {
+      const masc = json.filter(item => item.Gênero === 'Masculino' && item.Nacionalidade === 'Nacional').length;
+      const fem = json.filter(item => item.Gênero === 'Feminino' && item.Nacionalidade === 'Nacional').length;
+      const intl = json.filter(item => item.Nacionalidade === 'Internacional').length;
+      console.log('Loaded:', masc, 'masculinos,', fem, 'femininos,', intl, 'internacionais');
+      
+      return json.map(item => {
+        const nome = (item.Nome||'').trim(); if(!nome) return null;
+        return {
+          nome, telefone: (item.WhatsApp||'').trim(),
+          portfolio: (item['Link do Portfólio']||'').trim(),
+          genero: item.Gênero || 'Masculino', nacionalidade: item.Nacionalidade || 'Nacional',
+          estilos: (item['Estilo de Locução']||'').split(',').map(s=>s.trim().replace(/\.$/,'')).filter(Boolean),
+          sotaques: (item['Sotaque']||'').split(',').map(s=>s.trim()).filter(Boolean),
+          foto: (item.Foto||'').trim()
+        };
+      }).filter(Boolean);
+    }
+    throw new Error('Apps Script retornou dados inválidos');
+  } catch(e) {
+    console.error('Erro ao carregar dados do Apps Script:', e);
+    throw e;
+  }
 }
 
 // ═══ RENDER ═══
@@ -272,6 +286,11 @@ function cardHTML(l, idx) {
   const c = COLORS[idx % COLORS.length];
   const wp = waLink(l.telefone), init = initials(l.nome);
   const st = l.estilos.map(s => `<span class="s-pill ${norm(s).replace(/\s+/g,'-')}">${s}</span>`).join('');
+  
+  // Avatar: photo if available, otherwise initials
+  const avatarContent = l.foto && l.foto !== '' 
+    ? `<img src="${l.foto}" alt="${l.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span style="display:none;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;">${init}</span>`
+    : init;
 
   // Portfolio link - versão melhorada
   let portHtml = '';
@@ -288,7 +307,10 @@ function cardHTML(l, idx) {
 
   const sq = l.sotaques?.length ? l.sotaques.map(s => `<span class="tag sotaque">🗣 ${s}</span>`).join('') : '';
 
-  return `<div class="card"><div class="card-top"><div class="avatar" style="background:linear-gradient(135deg,${c[0]},${c[1]})">${init}</div><div class="card-info"><h3>${l.nome}</h3><div class="meta"><span class="tag masc">♂ Masc</span><span class="tag nac">🇧🇷 Nacional</span>${sq}</div></div></div><div class="contact"><div class="c-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${wp?`<a href="${wp}" target="_blank">${l.telefone}</a>`:l.telefone}</div><div class="c-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>${portHtml}</div></div><div class="divider"></div><div class="style-wrap">${st}</div></div>`;
+  const genderTag = l.genero === 'Feminino' ? '<span class="tag" style="background:rgba(237,107,142,0.08);color:var(--pink)">♀ Fem</span>' : '<span class="tag masc">♂ Masc</span>';
+  const nacTag = l.nacionalidade === 'Internacional' ? '<span class="tag" style="background:rgba(139,123,239,0.08);color:var(--purple)">🌍 Internacional</span>' : '<span class="tag nac">🇧🇷 Nacional</span>';
+  const avatarStyle = l.foto && l.foto !== '' ? 'position:relative;overflow:hidden;' : `background:linear-gradient(135deg,${c[0]},${c[1]})`;
+  return `<div class="card"><div class="card-top"><div class="avatar" style="${avatarStyle}">${avatarContent}</div><div class="card-info"><h3>${l.nome}</h3><div class="meta">${genderTag}${nacTag}${sq}</div></div></div><div class="contact"><div class="c-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${wp?`<a href="${wp}" target="_blank">${l.telefone}</a>`:l.telefone}</div><div class="c-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>${portHtml}</div></div><div class="divider"></div><div class="style-wrap">${st}</div></div>`;
 }
 
 function render() {
